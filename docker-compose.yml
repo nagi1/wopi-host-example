@@ -1,0 +1,25 @@
+version: "3"
+networks:
+  appnetwork:
+
+services:
+  code:
+    image: officewopi/code
+    container_name: code
+    # depends_on:
+    #   - app
+    ports:
+      - 9980:9980
+    restart: unless-stopped
+    environment:
+      - "username=admin"
+      - "password=password"
+      - "domain=wopiapp\\.test"
+      - 'dictionaries="en_GB en_US ar_SA ar_EG"'
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=false"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "wopiapp.test:host-gateway"
+    tty: true
+    networks:
+      - appnetwork
